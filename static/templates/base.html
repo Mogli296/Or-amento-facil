@@ -1,93 +1,58 @@
-
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="{% static 'favicon.ico' %}">
 
-    <title>Orçamento Facil</title>
+  <title>Orçamento Fácil</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+</head>
 
-    <!-- Custom styles for this template -->
-    <link href="/static/css/jumbotron.css" rel="stylesheet">
+<body role="document">
+  {% include 'navbar.html' %}
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="/static/js/ie-emulation-modes-warning.js"></script>
+  <div class="container">
+    <div class="body-content offset1">
+      <div class="row">
+        <div class="col-lg-2 col-12" style="padding-top: 110px; padding-bottom: 30px">
+          <p><button type="button" class="btn btn-success btn-block">
+            <span class="glyphicon glyphicon-usd pull-left" style="font-size:18px;"></span>Orçamentos
+          </button></p>
+          <p><a href="{% url 'cadastros' %}">
+            <button type="button" class="btn btn-primary btn-block">
+              <span class="glyphicon glyphicon-th-list pull-left" style="font-size:15px;"></span>Cadastros
+            </button></a></p>
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-  </head>
-
-  <body role="document">
-    {% include 'navbar.html' %}
-    
-
-
-
-
-
-     <div class="container">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-    
-    
-      <div  class="body-content offset1">
-        <div class='row'>
-        <div class='col-lg-2 col-12'>
-
-          <div style="padding-top: 110px; padding-bottom: 30px">
-          <p><button  style="vertical-align: center;" type="button" class="btn btn-success btn-block"><span style="font-size:18px; vertical-align: middle;" class="glyphicon glyphicon-usd pull-left"></span>Orçamentos</button></p>
-          <p><a href="{% url "cadastros" %}"><button type="button" class="btn btn-primary btn-block"><span style="font-size:15px; horizontal-align: middle;" class="glyphicon glyphicon-th-list pull-left"></span>Cadastros</button></a></p>
-          </div>
-
-
-
-          <ul class='nav nav-pills nav-stacked'>
-            <li><a href='/'><span class='badge pull-right'>8</span>Pendentes</a></li>
-            <li><a href='/'><span class='badge pull-right'>8</span>Aceitos</a></li>
-            <li><a href='/'><span class='badge pull-right'>18</span>Recusados</a></li>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/"><span class="badge pull-right">8</span>Pendentes</a></li>
+            <li><a href="/"><span class="badge pull-right">8</span>Aceitos</a></li>
+            <li><a href="/"><span class="badge pull-right">18</span>Recusados</a></li>
           </ul>
         </div>
-        <div class='col-lg-10 col-12'>
-            {% block content %} {% endblock %}
-          </div>
-            
+
+        <div class="col-lg-10 col-12">
+          {% block content %}{% endblock %}
         </div>
-        <hr>
-        
-      
       </div>
+      <hr>
+    </div>
+  </div>
 
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script>
-      $(document).ready(function(){
-
-        
-        {% block jquery %}
-        {% endblock %}
-        
-      });
-    </script>
-  </body>
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      {% block jquery %}{% endblock %}
+    });
+  </script>
+</body>
 </html>
