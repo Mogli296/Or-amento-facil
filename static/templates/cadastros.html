@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+
+{% block jquery %}
+
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if verUser %}
+
+<h1 style="padding-bottom: 40px">Cadastros</h1>
+  <!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li><a href="#home" role="tab" data-toggle="tab">Produtos</a></li>
+  <li><a href="#profile" role="tab" data-toggle="tab">Clientes</a></li>
+  <li><a href="#service" role="tab" data-toggle="tab">Serviços</a></li>
+  <li><a href="#messages" role="tab" data-toggle="tab">Transportadoras</a></li>
+  <li><a href="#terms" role="tab" data-toggle="tab">Termos</a></li>
+  <li><a href="#garantia" role="tab" data-toggle="tab">Garantia</a></li>
+  <li><a href="#payment" role="tab" data-toggle="tab">Pagamento</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="home">{% include "add_products.html" %}</div>
+  <div class="tab-pane" id="profile">{% include "add_clients.html" %}</div>
+  <div class="tab-pane" id="service">{% include "add_services.html" %}</div>
+  <div class="tab-pane" id="messages">{% include "add_shippings.html" %}</div>
+  <div class="tab-pane" id="terms">{% include "add_terms.html" %}</div>
+  <div class="tab-pane" id="garantia">{% include "add_garantia.html" %}</div>
+  <div class="tab-pane" id="payment">{% include "add_payment.html" %}</div>
+</div>
+{% else %}
+<div style="text-align: center">
+<h1>{{padrao}} </h1><a href="/accounts/login/"><button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span> Login</button></a>
+</div>
+{% endif %}
+
+{% endblock %}
+
+

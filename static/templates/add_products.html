@@ -1,0 +1,49 @@
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="col-sm-6 col-sm-offset-3">
+		<h2>{{ form_title }}</h2>
+
+		<form method="POST" action="">	{% csrf_token %}
+			{{ produto_form|crispy }}
+			<input type="submit" class='btn' name="add_produto" value="Save edit" />
+
+		</form>
+		&nbsp&nbsp&nbsp
+
+		<h2>Produtos Cadastrados</h2>
+		<table class="table table-condensed">
+			<thead>
+				<th>Produto</th>
+				
+				<th>Preço</th>
+
+			</thead>
+
+			
+			{% for produto in produtos %}
+			<tbody>
+				<thead>
+					<tr>
+
+						<td>{{ produto.title }}</td>
+						<td>{{ produto.price}}</td>
+						
+
+								
+								<td align="center "><a class="btn btn-primary btn-xs" type="button" name="edit_product" href="{% url "edit_produtos" produto.id %}">Edit</a></td>
+								<td align="center "><a class="glyphicon glyphicon-remove" name="delete_product" href="{% url "deletar" produto.id %}"></a></td>
+								
+							
+					</tr>
+				<thead>	
+			</tbody>
+
+			{% endfor %}
+
+
+		</table>
+
+	</div>
+{% endblock %}

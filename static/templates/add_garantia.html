@@ -1,0 +1,21 @@
+
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+<div class="col-sm-6 col-sm-offset-3">
+		<h2>{{guarantee_title}}</h2>
+
+		<form method="POST" action="">	{% csrf_token %}
+			{{ guarantee_form|crispy }}
+
+			<input name="add_garantia" type="submit" class='btn'value="Save edit" />
+
+		</form>
+
+&nbsp&nbsp&nbsp
+
+	</div>
+{% endblock %}

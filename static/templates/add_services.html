@@ -1,0 +1,49 @@
+
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+<h2>Servicos Cadastrados</h2>
+<div class="col-sm-6 col-sm-offset-3">
+		<h2>{{service_title}}</h2>
+
+		<form method="POST" action="/cadastros/#service" name="service_form">	{% csrf_token %}
+			{{ service_form|crispy }}
+
+			<input name="add_service" type="submit" class='btn' value="Save edit" />
+
+		</form>
+
+&nbsp&nbsp&nbsp
+
+	<h2>Servicos Cadastrados</h2>
+		<table class="table table-condensed">
+			<thead>
+				<th>Serviços</th>	
+
+			</thead>
+
+			
+			{% for service in services %}
+			<tbody>
+				<thead>
+					<tr>
+
+						<td>{{ service.title }}</td>
+						<td>{{ service.tipo }}</td>
+							<td align="center "><a class="btn btn-primary btn-xs" type="button" href="{% url "edit_produtos" service.id %}">Edit</a></td>
+								<td align="center "><a class="glyphicon glyphicon-remove" href="{% url "deletar" service.id %}"></a></td>
+					</tr>
+				<thead>	
+			</tbody>
+
+
+			{% endfor %}
+
+
+		</table>
+	</div>
+
+{% endblock %}
