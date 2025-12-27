@@ -1,13 +1,20 @@
-Django==1.6.7
-South==1.0
+# Framework principal
+Django>=3.2,<4.0
+
+# Interface administrativa com Bootstrap
 django-admin-bootstrapped==2.0.5
-django-countries==3.0.1
-django-crispy-forms==1.4.0
-django-localflavor==1.0
-django-localflavor-br==1.0
-django-registration==1.0
-django-tables2==0.15.0
-requests==2.4.3
-six==1.8.0
-stripe==1.19.0
-wsgiref==0.1.2
+
+# Pacotes auxiliares
+django-countries>=7.2
+django-crispy-forms>=2.0
+django-localflavor>=3.1
+django-registration>=3.3
+django-tables2>=2.7
+
+# Dependências gerais
+requests>=2.31
+six>=1.16
+stripe>=5.0
+
+# Servidor WSGI para produção
+gunicorn>=21.2
