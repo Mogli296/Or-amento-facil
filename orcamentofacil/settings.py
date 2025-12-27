@@ -5,6 +5,7 @@ Atualizado para Django 3.2 e compatível com Render.
 
 import os
 from pathlib import Path
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'transportadoras',
     'cadastros',
     # pacotes externos
-    'registration',
+    'django_registration',   # corrigido aqui
     'django_tables2',
     'crispy_forms',
     'django_countries',
@@ -66,8 +67,6 @@ WSGI_APPLICATION = 'orcamentofacil.wsgi.application'
 # =========================
 # Banco de dados
 # =========================
-# Render fornece DATABASE_URL, usamos dj_database_url para parsear
-import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
