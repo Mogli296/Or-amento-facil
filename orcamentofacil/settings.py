@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Segurança
 # =========================
 SECRET_KEY = os.environ.get("SECRET_KEY", "chave-insegura-dev")
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = os.environ.get("DEBUG", "True") == "True"   # fallback para True em dev
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 SITE_ID = 1
@@ -22,8 +22,6 @@ SITE_ID = 1
 # Aplicativos instalados
 # =========================
 INSTALLED_APPS = [
-    'django_admin_bootstrapped.bootstrap3',
-    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,11 +34,11 @@ INSTALLED_APPS = [
     'transportadoras',
     'cadastros',
     # pacotes externos
-    'django_registration',   # corrigido
+    'django_registration',
     'django_tables2',
     'crispy_forms',
     'django_countries',
-    'localflavor',           # corrigido
+    'localflavor',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -109,6 +107,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # cuidado: só mantenha se o arquivo existir
                 'cadastros.context_processors.cadastros',
             ],
         },
