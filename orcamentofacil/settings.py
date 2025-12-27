@@ -1,43 +1,26 @@
 """
 Django settings for orcamentofacil project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
+Atualizado para Django 3.2 e compatível com Render.
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'diegoeconstante@gmail.com'
-EMAIL_HOST_PASSWORD = 'aNACRONICA2'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'awqy_jjzjra7$3xs!jvrk^h64rst!(cu2d1geu&$asv_#&7k!$'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
+# =========================
+# Segurança
+# =========================
+SECRET_KEY = os.environ.get("SECRET_KEY", "chave-insegura-dev")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 SITE_ID = 1
 
-
-
-# Application definition
-
-INSTALLED_APPS = (
+# =========================
+# Aplicativos instalados
+# =========================
+INSTALLED_APPS = [
     'django_admin_bootstrapped.bootstrap3',
     'django_admin_bootstrapped',
     'django.contrib.admin',
@@ -47,103 +30,104 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'south',
+    # apps do projeto
     'orcamentos',
     'transportadoras',
-    'localflavor',
-    'django_localflavor_br',
-    'registration',
     'cadastros',
+    # pacotes externos
+    'registration',
     'django_tables2',
     'crispy_forms',
     'django_countries',
-
-)
+    'django_localflavor',
+]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-
-MIDDLEWARE_CLASSES = (
+# =========================
+# Middleware
+# =========================
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    'django.core.context_processors.request',
-    'cadastros.context_processors.cadastros',
-    # 'cadastros.context_processors.add_clients',
-    # 'cadastros.context_processors.add_produtos',
-    # 'cadastros.context_processors.add_shippings',
-    # 'cadastros.context_processors.add_services',
-    # 'cadastros.context_processors.add_terms',
-    # 'cadastros.context_processors.add_garantias',
-
-
-)
-
-
+# =========================
+# URLs e WSGI
+# =========================
 ROOT_URLCONF = 'orcamentofacil.urls'
-
 WSGI_APPLICATION = 'orcamentofacil.wsgi.application'
 
-ACCOUNT_ACTIVATION_DAYS = 7
-
-
-
-LOGIN_REDIRECT_URL = '/'
-
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+# =========================
+# Banco de dados
+# =========================
+# Render fornece DATABASE_URL, usamos dj_database_url para parsear
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+    )
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+# =========================
+# Internacionalização
+# =========================
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
+# =========================
+# Arquivos estáticos e mídia
+# =========================
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT= os.path.join('static', 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
-STATIC_ROOT = os.path.join('static', 'static_root')
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
-STATICFILES_DIRS = (
-    os.path.join('static', 'static_files'),
+# =========================
+# Templates
+# =========================
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'static' / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'cadastros.context_processors.cadastros',
+            ],
+        },
+    },
+]
 
-    )
+# =========================
+# Email
+# =========================
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 
-TEMPLATE_DIRS = (
-    os.path.join('static', 'templates'),
-
-
-    )
+# =========================
+# Autenticação
+# =========================
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_ACTIVATION_DAYS = 7
