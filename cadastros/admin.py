@@ -1,115 +1,67 @@
 from django.contrib import admin
-
-# Register your models here.
-from .models import *
-# from .models import Client
-# from .models import Shipping
-# from .models import ProductShip
-# from .models import Service
-from forms import ClientForm
-# from .models import Person
+from .models import Produto, Client, Shipping, ProductShip, Service, Guarantee, Term, Payment
+from .forms import ClientForm   # <-- corrigido
 
 class ProdutoAdmin(admin.ModelAdmin):
-	
-	# exclude = ('user',)
-
-	class Meta:
-		model = Produto
-	
-	def save_model(self, request, obj, form, change):
-		if not change:
-			obj.user = request.user
-			obj.save()
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.user = request.user
+        obj.save()
 
 admin.site.register(Produto, ProdutoAdmin)
 
 
-# class PersonAdmin(admin.ModelAdmin):
-# 	class Meta:
-# 		model = Person
-
-# admin.site.register(Person, PersonAdmin)
-
 class ClientAdmin(admin.ModelAdmin):
-	
-	# exclude = ('user',)
+    list_display = ['__str__', 'cpf', 'cnpj', 'user']   # <-- corrigido
+    form = ClientForm
 
-	
-	list_display = ['__unicode__', 'cpf', 'cnpj', 'user']
-	form = ClientForm
-	
-	
-	def save_model(self, request, obj, form, change):
-		if not change:
-			obj.user = request.user
-			obj.save()
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.user = request.user
+        obj.save()
 
 admin.site.register(Client, ClientAdmin)
 
+
 class ShippingAdmin(admin.ModelAdmin):
-	
-	# exclude = ('user',)
+    list_display = ['__str__', 'email', 'cnpj', 'phone']   # <-- corrigido
 
-	list_display = ['__unicode__', 'email' ,'cnpj', 'phone' ]
-
-	class Meta:
-		model = Shipping
-	
-	
-	def save_model(self, request, obj, form, change):
-		if not change:
-			obj.user = request.user
-			obj.save()
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.user = request.user
+        obj.save()
 
 admin.site.register(Shipping, ShippingAdmin)
 
+
 class ProductShipAdmin(admin.ModelAdmin):
-	
-	# exclude = ('user',)
-	# inlines = [
-		
-	# ]
-
-	list_display = ['__unicode__','price', 'deliverydays' ]
-
-	class Meta:
-		model = ProductShip
-	
+    list_display = ['__str__', 'price', 'deliverydays']   # <-- corrigido
 
 admin.site.register(ProductShip, ProductShipAdmin)
 
+
 class ServiceAdmin(admin.ModelAdmin):
-
-	list_display = ['__unicode__','title','tipo','price','hourprice']
-
-	class Meta:
-		model = Service
+    list_display = ['__str__', 'title', 'tipo', 'price', 'hourprice']   # <-- corrigido
 
 admin.site.register(Service, ServiceAdmin)
 
+
 class GuaranteeAdmin(admin.ModelAdmin):
-
-	list_display = ['__unicode__','title']
-
-	class Meta:
-		model = Guarantee
+    list_display = ['__str__', 'title']   # <-- corrigido
 
 admin.site.register(Guarantee, GuaranteeAdmin)
 
+
 class TermsAdmin(admin.ModelAdmin):
-
-	list_display = ['__unicode__','title']
-
-	class Meta:
-		model = Term
+    list_display = ['__str__', 'title']   # <-- corrigido
 
 admin.site.register(Term, TermsAdmin)
 
+
 class PaymentAdmin(admin.ModelAdmin):
-
-	list_display = ['__unicode__','title','product','productDiscount','productInstallments','service','serviceDiscount','serviceInstallments']
-
-	class Meta:
-		model = Payment
+    list_display = [
+        '__str__', 'title', 'product', 'productDiscount', 'productInstallments',
+        'service', 'serviceDiscount', 'serviceInstallments'
+    ]   # <-- corrigido
 
 admin.site.register(Payment, PaymentAdmin)
