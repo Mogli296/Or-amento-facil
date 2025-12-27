@@ -16,5 +16,8 @@ requests>=2.31
 six>=1.16
 stripe>=5.0
 
+# Banco de dados (para suportar DATABASE_URL do Render)
+dj-database-url>=0.5.0
+
 # Servidor WSGI para produção
 gunicorn>=21.2
