@@ -36,11 +36,11 @@ INSTALLED_APPS = [
     'transportadoras',
     'cadastros',
     # pacotes externos
-    'django_registration',   # corrigido aqui
+    'django_registration',   # corrigido
     'django_tables2',
     'crispy_forms',
     'django_countries',
-    'django_localflavor',
+    'localflavor',           # corrigido
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
